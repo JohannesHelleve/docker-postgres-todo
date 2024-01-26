@@ -1,0 +1,46 @@
+
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: strong-password
+    depends_on:
+      - db
+  
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    volumes:
+      - D:\Prosjekter\docker-postgres-todo:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=Sjef
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
+
+
+# Here you can define your secrets. Secrets are used to pass sensitive
+#   db-password:
+#     file: db/password.txt
+
