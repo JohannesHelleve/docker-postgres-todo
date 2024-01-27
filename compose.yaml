@@ -13,6 +13,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     restart: always
+    ports:
+      - 8080:80
     environment:
       PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
       PGADMIN_DEFAULT_PASSWORD: strong-password
@@ -24,7 +26,7 @@ services:
     restart: always
     user: postgres
     volumes:
-      - D:\Prosjekter\docker-postgres-todo:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=Sjef
       - POSTGRES_PASSWORD=1234
